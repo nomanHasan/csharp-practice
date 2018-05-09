@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace _8.linq {
     class Program {
@@ -30,6 +31,13 @@ namespace _8.linq {
 
             log ("Replace Vowel", names.Select (n => n.Replace ("a", "").Replace ("e", "").Replace ("i", "")
                 .Replace ("o", "").Replace ("u", "")));
+
+            IEnumerable<IDictionary<string, string>> obs = names.Select (x => new Dictionary<string, string> { { "Original", x },
+                { "VowlLess", Regex.Replace (x, "[aeiou]", "") }
+            });
+
+            log ("Dictionary", obs);
+
         }
 
         static void log (IEnumerable<string> strings) {
@@ -43,6 +51,14 @@ namespace _8.linq {
             Console.WriteLine (title + ": ");
             foreach (var s in strings) {
                 Console.Write (s + ", ");
+            }
+        }
+
+        static void log (string title, IEnumerable<IDictionary<string, string>> obs) {
+            Console.WriteLine ();
+            Console.WriteLine (title + ": ");
+            foreach (var s in obs) {
+                Console.WriteLine (s.Keys + ": " + s.Values);
             }
         }
 
